@@ -1,23 +1,50 @@
-# Student Portfolio — React + Vite
+# Veeravhadra — Student Portfolio
 
-A responsive, single-page student portfolio built with React functional components, Vite, and standard CSS. It includes a profile, education, skills, projects, achievements, a light/dark theme switch, and a client-side validated contact form.
+A responsive student portfolio built with React, Vite, and standard CSS. It includes a profile, education, skills, projects, achievements, a mobile navigation menu, a light/dark theme toggle, and a client-side validated contact form.
 
-> **Make it yours:** the portfolio currently uses fictional sample details forveera  Mehta. Update `src/data/portfolio.js` with your own accurate information, links, and project images before publishing.
+## Before you publish
 
-## 1. Check Node.js and npm
+The profile photo is stored locally in `src/assets/profile-photo.png`. The name is set to **Veeravhadra** in `src/data/portfolio.js`, but several other profile fields and portfolio entries are sample content. Review and replace the email, phone, location, introduction, education, skills, project details, social links, and achievements with your own accurate information before sharing the site.
 
-Install a current Node.js LTS release from [nodejs.org](https://nodejs.org/) if needed. npm is included with Node.js. Open a terminal in VS Code and check:
+The contact form validates input and displays feedback, but it does not send or store messages. Connect a backend or a form service to receive submissions.
+
+## Requirements
+
+- Node.js 20.19+ or 22.12+
+- npm (included with Node.js)
+- Visual Studio Code (recommended)
+
+Check your installation in the VS Code terminal:
 
 ```powershell
 node --version
 npm --version
 ```
 
-Both commands should print version numbers. If PowerShell says a command is not recognized, restart VS Code after installing Node.js and check again.
+If either command is not recognized, install a compatible Node.js release and restart VS Code.
 
-## 2. Create a React project with Vite
+## Run this project
 
-For a new project, run these commands in PowerShell:
+Open the project folder in VS Code (**File → Open Folder…**) and open a terminal (**Terminal → New Terminal**). Run these commands from the folder containing `package.json`:
+
+```powershell
+npm install
+npm run dev
+```
+
+Open the local URL printed by Vite, usually `http://localhost:5173`. Leave the terminal running while you use the site. Press `Ctrl+C` in the terminal to stop the development server.
+
+To open the current folder from a PowerShell terminal, use:
+
+```powershell
+code .
+```
+
+If `code .` is not recognized, open the folder through VS Code's **File → Open Folder…** menu.
+
+## Create a new React + Vite project
+
+To start a separate project from scratch, run:
 
 ```powershell
 npm create vite@latest student-portfolio -- --template react
@@ -26,130 +53,128 @@ npm install
 code .
 ```
 
-If `code .` is not recognized, open VS Code and select **File → Open Folder…**, then choose the `student-portfolio` folder.
+Copy this project's `src` files and `index.html` into the matching locations in the new Vite project. Keep the new project's `package.json`, `package-lock.json`, and `vite.config.js`, then run `npm install` and `npm run dev`. Do not copy `node_modules` or `dist`.
 
-This repository is already a Vite React project. To use the finished version here, open its folder in VS Code and keep the existing `package.json`; the implementation below replaces or adds files under `src/` and updates the root `README.md` and `index.html`.
-
-Create the two source folders if they do not already exist:
-
-```powershell
-New-Item -ItemType Directory -Force src\components, src\data
-```
-
-Copy the files in this repository into the matching locations in your new Vite project. Do not copy `node_modules`; run `npm install` in the new project's folder instead.
-
-## 3. Project structure
+## Project structure
 
 ```text
-student-portfolio/
+KIT-ai/
 ├── index.html
 ├── package.json
+├── package-lock.json
 ├── vite.config.js
+├── README.md
 ├── public/
-│   └── favicon.svg
+│   ├── favicon.svg
+│   └── icons.svg
 └── src/
     ├── App.jsx
     ├── App.css
     ├── index.css
     ├── main.jsx
+    ├── assets/
+    │   ├── profile-photo.png
+    │   ├── hero.png
+    │   ├── react.svg
+    │   └── vite.svg
     ├── components/
     │   └── PortfolioSections.jsx
     └── data/
         └── portfolio.js
 ```
 
-- `index.html` is the browser document Vite serves and builds. Its `#root` element is where React mounts.
-- `package.json` lists dependencies and commands such as `npm run dev` and `npm run build`.
-- `vite.config.js` configures the Vite development server and build.
-- `public/` contains static files served as-is, such as a favicon.
-- `src/main.jsx` starts the React app and renders `<App />` inside `#root`.
-- `src/App.jsx` assembles the page and owns the light/dark theme state.
-- `src/data/portfolio.js` is the editable source for profile, education, skills, projects, and highlights.
-- `src/components/PortfolioSections.jsx` defines reusable components and the contact form.
-- `src/index.css` contains global styles and browser defaults; `src/App.css` contains the portfolio layout and responsive styles.
+- `index.html` provides the browser document and the `#root` element where React mounts.
+- `package.json` lists dependencies and the `dev`, `build`, `lint`, and `preview` scripts.
+- `vite.config.js` configures Vite and the React plugin.
+- `public/` contains static public files.
+- `src/main.jsx` starts the app and renders `<App />`.
+- `src/App.jsx` assembles the page and manages the light/dark theme state.
+- `src/components/PortfolioSections.jsx` contains reusable page sections and the contact form.
+- `src/data/portfolio.js` holds the editable profile, education, skills, projects, and achievements.
+- `src/assets/profile-photo.png` is the local profile image imported by the portfolio data.
+- `src/index.css` defines global styles; `src/App.css` defines the portfolio layout, themes, and responsive styles.
+- `dist/` is generated by the production build and should not be edited by hand.
 
-## 4. How the React pieces work
+## Update your profile
 
-- **JSX and functional components:** components such as `Hero`, `Education`, and `ProjectCard` are JavaScript functions that return JSX markup. `App` composes them into the page.
-- **Props:** `App` passes values down, for example `<Hero student={portfolio} />` and `<Projects projects={portfolio.projects} />`. The components display that data without owning a second copy.
-- **Lists and keys:** education, skills, projects, and social links use `.map()`. Each repeated item has a stable, meaningful `key`, such as `project.title`.
-- **State and events:** `useState` keeps the theme, mobile-menu visibility, and form values in React state. Click handlers toggle the theme/menu; `onChange` updates fields; `onSubmit` validates the form.
-- **Reusable components:** the navigation, section heading, education list, skills, project card/list, contact form, and footer each have a focused job.
-- **CSS:** `App.css` uses CSS variables for the theme, grid/flexbox for layout, and media queries for smaller screens. The theme button changes the `data-theme` attribute, which switches the variables.
+Edit `src/data/portfolio.js`. The profile photo is imported at the top of the file:
 
-The contact form checks that all fields are filled and the email looks valid. It **does not send or store a message**: a real inbox requires a backend/API or a connected form service. The success feedback explicitly reminds visitors that this is a demo.
+```js
+import profilePhoto from '../assets/profile-photo.png'
+```
 
-## 5. Run the application
+To use a different local image, replace `src/assets/profile-photo.png` with your image, keeping the same filename and format, or update the import path and filename. Then update the `photo` value in the portfolio object if needed.
 
-From the project directory:
+Replace sample text and links with your own details. Each project includes a title, description, technologies, image, image alternative text, repository URL, optional demo URL, and accent color. Use images you own or have permission to use. Project preview images are currently remote URLs, so they require an internet connection.
+
+## How the React app works
+
+- **JSX and functional components:** `App`, `Hero`, `Education`, and `ProjectCard` are JavaScript functions that return JSX.
+- **Props:** `App` passes portfolio data into reusable components, for example `<Hero student={portfolio} />` and `<Projects projects={portfolio.projects} />`.
+- **Rendering lists:** arrays are rendered with `.map()`. Repeated items use stable keys such as a project title.
+- **State and events:** `useState` tracks the theme, mobile-menu state, and contact form fields. Button clicks and form changes update state through event handlers.
+- **Form validation:** submission checks that all fields are filled and the email format is plausible. This is client-side validation only; it is not message delivery.
+- **Responsive CSS:** CSS grid, flexbox, media queries, theme variables, and reduced-motion styles adapt the layout to different screens and preferences.
+
+## Available commands
+
+Run these from the project directory:
 
 ```powershell
 npm run dev
+npm run build
+npm run preview
+npm run lint
 ```
 
-Open the local URL printed by Vite (usually `http://localhost:5173`). Keep the terminal running while you work; Vite refreshes the browser when you save a file. Stop the server with `Ctrl+C`.
+- `npm run dev` starts the local development server.
+- `npm run build` checks and creates the production site in `dist/`.
+- `npm run preview` serves the production build locally after a build.
+- `npm run lint` checks the source with Oxlint.
 
-## 6. Make the portfolio yours
+## Build and deploy
 
-Edit `src/data/portfolio.js`:
-
-1. Replace the sample name, email, phone, location, introduction, and objective.
-2. Replace the sample LinkedIn and GitHub URLs with your profile URLs.
-3. Update college, university, degree, dates, grades, and achievements.
-4. Add or remove skills and projects. Use images you own or have permission to use, with useful `imageAlt` descriptions.
-5. Add real repository and deployed-demo links. Remove a demo URL if a project has no live version.
-
-Keep the object property names intact unless you also update the components that read them.
-
-## 7. Build for production
-
-Run the production build and optionally preview it locally:
+Create and preview a production build:
 
 ```powershell
 npm run build
 npm run preview
 ```
 
-Vite writes the optimized site to `dist/`. Deploy that folder to a static host such as GitHub Pages, Netlify, or Vercel. For a real contact form, connect a backend or a form service and replace the demo-only submission behavior.
+Deploy the generated `dist/` folder to a static hosting provider such as Netlify or Vercel. For GitHub Pages, configure Vite's `base` option to match the repository path before building. Test the deployed site on mobile and desktop. Connect a backend or form service before expecting the contact form to deliver messages.
 
-## 8. Common issues
+## Troubleshooting
 
-- **`node` or `npm` is not recognized:** install Node.js LTS, restart the terminal/VS Code, and rerun the version checks.
-- **`npm run dev` says there is no script:** make sure the terminal is in the project folder containing `package.json`.
-- **A dependency or Vite command is missing:** run `npm install` in that same folder, then retry.
-- **A page is blank or a module cannot be found:** check the spelling and capitalization of the file path and import. For example, `src/data/portfolio.js` must match its import exactly.
-- **Changes do not appear:** save the file, check the terminal for Vite errors, and refresh the browser. Restart the dev server if it stopped.
-- **Images do not load:** the sample images are remote URLs and require an internet connection. Replace them with your own images in `public/` and use paths such as `/images/my-project.jpg`.
-- **`code .` is not recognized:** open the project folder using VS Code's **File → Open Folder…** menu.
-- **The contact form says it is a demo:** that is expected. Client-side JavaScript cannot deliver email by itself; add a backend or form provider to receive submissions.
+- **`node` or `npm` is not recognized:** install a compatible Node.js release, restart VS Code, and check the version commands again.
+- **`Missing script: dev` or a package file cannot be found:** make sure the terminal is in the folder containing this project's `package.json`.
+- **Vite or a dependency is missing:** run `npm install` from the project directory.
+- **A blank page or import error appears:** check file names and import paths. For example, `src/data/portfolio.js` must match its import exactly.
+- **The photo does not load:** confirm `src/assets/profile-photo.png` exists and that the import path in `src/data/portfolio.js` is correct.
+- **A project image does not load:** remote images need internet access. You can instead add a permitted image under `public/images/` and use a URL such as `/images/my-project.jpg`.
+- **The contact form says it is a demo:** that is expected until a backend or form service is connected.
+- **`code .` is not recognized:** use VS Code's **File → Open Folder…** menu.
 
-## 9. Practical exercises
+## Practical exercises
 
-Each exercise includes a prompt, expected result, hint, and a solution. Make changes in `src/data/portfolio.js` unless a different file is named.
+### 1. Add a skill
 
-### Exercise 1 — Add a skill
+**Question:** Add TypeScript to the Development skills.
 
-**Question:** Add `TypeScript` to the Development skills.
+**Expected output:** A TypeScript badge appears in the Development card.
 
-**Expected output:** A `TypeScript` badge appears with the other Development skills.
+**Hint:** Skills are rendered from the relevant `skills` array in `src/data/portfolio.js`.
 
-**Hint:** The skill badges are rendered from the `skills` array in the matching group.
+**Solution:** Add `'TypeScript'` to the Development group's `skills` list.
 
-**Solution:** Add the string to the Development group's `skills` array:
+### 2. Add a project
 
-```js
-skills: ['JavaScript', 'React', 'HTML & CSS', 'Git & GitHub', 'REST APIs', 'TypeScript'],
-```
+**Question:** Add a project named Weather Notes.
 
-### Exercise 2 — Add a project card
+**Expected output:** A new project card appears with an image, description, technology badges, repository link, and optional live-demo link.
 
-**Question:** Add a project named `Weather Notes`.
+**Hint:** Add an object to the `projects` array. Use the same fields as the existing project entries.
 
-**Expected output:** A project card appears with an image, description, technology badges, GitHub link, and optional live-demo link.
-
-**Hint:** Add an object to `portfolio.projects`; `Projects` maps over this array to create a `ProjectCard` for each object.
-
-**Solution:** Add a new object to the `projects` array. Use your actual links and an image URL you have permission to use:
+**Solution:**
 
 ```js
 {
@@ -158,95 +183,67 @@ skills: ['JavaScript', 'React', 'HTML & CSS', 'Git & GitHub', 'REST APIs', 'Type
   description: 'A small weather dashboard for saving notes about favorite places.',
   technologies: ['React', 'CSS', 'Weather API'],
   image: '/images/weather-notes.jpg',
-  imageAlt: 'Weather dashboard preview',
+  imageAlt: 'Preview of the Weather Notes dashboard',
   repository: 'https://github.com/YOUR-USERNAME/weather-notes',
   demo: '',
   accent: 'mint',
 },
 ```
 
-Place the image at `public/images/weather-notes.jpg`. An empty `demo` hides the Live demo link.
+Put the image at `public/images/weather-notes.jpg` and replace the example repository URL. An empty `demo` hides the live-demo link.
 
-### Exercise 3 — Update profile details using props
+### 3. Update profile details through props
 
-**Question:** Change the name and introduction, then find how those values reach the profile component.
+**Question:** Change your name and introduction, then find how those values reach the profile component.
 
-**Expected output:** The hero greeting and navigation wordmark use the updated name; the introduction changes in the hero.
+**Expected output:** The hero heading and introduction display the updated values.
 
-**Hint:** `App.jsx` passes the whole data object to `Hero` as the `student` prop and the name to `Navbar` as `name`.
+**Hint:** `App.jsx` passes the portfolio object to `Hero` as the `student` prop.
 
-**Solution:** Update `name` and `introduction` in `portfolio.js`. The existing JSX already passes the props:
+**Solution:** Update `name` and `introduction` in `src/data/portfolio.js`. `Hero` reads the values from `student.name` and `student.introduction`.
 
-```jsx
-<Navbar name={portfolio.name} onThemeToggle={toggleTheme} theme={theme} />
-<Hero student={portfolio} />
-```
+### 4. Explore the theme toggle
 
-Inside `Hero`, `student.name` and `student.introduction` read those prop values.
+**Question:** Find how the light/dark theme button changes the page.
 
-### Exercise 4 — Create a dark/light theme toggle
+**Expected output:** Clicking the button switches theme; clicking it again restores the previous theme.
 
-**Question:** Add a button that switches between light and dark colors.
+**Hint:** Check `useState` in `src/App.jsx`, the `data-theme` attribute, and the theme variables in `src/App.css`.
 
-**Expected output:** Clicking the navigation theme button changes the page colors; clicking again restores them.
+**Solution:** The theme is already implemented. `App.jsx` stores `light` or `dark` in state, and `App.css` changes its CSS variables when `.portfolio` has `data-theme="dark"`. Try changing the theme colors in the CSS.
 
-**Hint:** Keep the current mode in `useState`, toggle it in an event handler, and select CSS variables with a data attribute.
+### 5. Test contact form validation
 
-**Solution:** This is already implemented. In `App.jsx`, the state and handler are:
+**Question:** Submit the form empty, with an invalid email, and then with valid-looking values.
 
-```jsx
-const [theme, setTheme] = useState('light')
-function toggleTheme() {
-  setTheme((currentTheme) => (currentTheme === 'light' ? 'dark' : 'light'))
-}
-```
+**Expected output:** Empty fields and invalid email produce errors. Valid-looking values show a demo confirmation that explains messages are not delivered.
 
-The outer element uses `<div className="portfolio" data-theme={theme}>`; `App.css` defines the alternate variables in `.portfolio[data-theme='dark']`. The `Navbar` calls the handler from its theme button.
+**Hint:** Find `handleSubmit` in the `Contact` component in `src/components/PortfolioSections.jsx`.
 
-### Exercise 5 — Validate the contact form
+**Solution:** The validation is already implemented. It trims field values, checks for empty input, and checks the email format with `/^[^\s@]+@[^\s@]+\.[^\s@]+$/`. A real form must send submissions to a backend or form provider.
 
-**Question:** Try to submit empty fields, an invalid email, and then valid-looking details.
+### 6. Check responsive layout
 
-**Expected output:** Empty fields and invalid email get an error message. Valid details get a clear demo success message; no email is sent.
+**Question:** Find the CSS that makes the cards stack on a narrow screen.
 
-**Hint:** Inspect `Contact` in `src/components/PortfolioSections.jsx`: it stores the fields with `useState` and checks them in `handleSubmit`.
+**Expected output:** Skills, projects, and highlights use one column at widths up to 640px.
 
-**Solution:** The existing handler prevents the browser's default submission, trims values, rejects empty fields, and checks the email with `/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/`. A valid submission sets a success message that explains the need for a backend or form service. For actual delivery, submit the values to a server endpoint or a form provider rather than displaying a success message alone.
+**Hint:** Look for `@media (max-width: 640px)` in `src/App.css`.
 
-### Exercise 6 — Make the portfolio responsive
+**Solution:** The mobile media query sets the grid columns to `1fr`. Try adjusting the breakpoint and preview the page at mobile and desktop widths.
 
-**Question:** Adjust the layout so the project cards stack on narrow mobile screens.
+### 7. Deploy the site
 
-**Expected output:** On screens 640px wide or smaller, project cards display in one column; wider screens retain the multi-column layout.
+**Question:** Publish the finished portfolio using a static hosting service.
 
-**Hint:** Check the `@media (max-width: 640px)` rule in `src/App.css`.
+**Expected output:** A public URL loads the production portfolio.
 
-**Solution:** The mobile breakpoint already sets:
-
-```css
-.skills-grid,
-.projects-grid,
-.highlights-grid {
-  grid-template-columns: 1fr;
-}
-```
-
-To try a different breakpoint, change `640px` carefully and preview the page at both mobile and desktop widths using browser developer tools.
-
-### Exercise 7 — Deploy the website
-
-**Question:** Publish your portfolio using a static hosting service.
-
-**Expected output:** A public URL loads the production website.
-
-**Hint:** Build first, then configure the hosting provider to deploy the `dist/` output folder. Keep your GitHub repository and live-demo links pointed at real projects.
+**Hint:** Build the project and deploy the `dist/` output folder.
 
 **Solution:**
 
-1. Add your finished project to a Git repository and push it to GitHub.
-2. Run `npm run build` locally and check that `dist/` is created.
-3. Import the repository in a host such as Netlify or Vercel. Use `npm run build` as the build command and `dist` as the output directory.
-4. Deploy and open the generated URL. If you use GitHub Pages, configure the Vite `base` path for the repository name before building.
-5. Test the live page on mobile and desktop. Connect a backend/form service before promising that the contact form delivers messages.
-#   k i t - p o r t f o l i o  
- 
+1. Push the project to a Git provider such as GitHub.
+2. Run `npm run build` and confirm `dist/` is created.
+3. Import the repository into Netlify or Vercel. Set the build command to `npm run build` and output directory to `dist`.
+4. Deploy and test the public URL on mobile and desktop.
+5. Connect a backend or form service if visitors need to send messages.
